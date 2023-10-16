@@ -1,34 +1,37 @@
-import React from 'react'
+import React, { memo } from 'react'
 
 function Drum(props) {
-  // Create handler for key events
-  const handleKey = (event) => {
-    if (event.key === props.obj.keyName) {
-      props.obj.audio.play();
-      props.callback(props.obj.name);
-    }
-  }
-  // Create listener to play sound with keyboard
+
+  let data = props.obj
+
   React.useEffect(() => {
-    window.addEventListener('keydown', handleKey);
+    window.addEventListener('keydown', (event) => {
+      if (event.key === data.keyName) handleAudio();
+    })
 
-    // Clean-up listener
-    return () => {
-      window.removeEventListener('keydown', handleKey);
-    };
+    return (
+      window.removeEventListener('keydown', (event) => {
+        if (event.key === data.keyName) handleAudio();
+      })
+    )
+  }
+  )
 
-  }, []);
+  const handleAudio = () => {
+    let src = data.context.createBufferSource();
+    src.buffer = data.audio;
+    src.connect(data.context.destination);
+    src.start();
+    props.callback(data.name);
+  }
 
   return (
-    <div>
-      <button onClick={() => {
-        props.obj.audio.play();
-        props.callback(props.obj.name);
-      }}>
+    <div id={data.name} className='drum-pad'>
+      <button id={props.obj.key} onClick={() => {handleAudio()}}>
         {props.obj.keyName.toUpperCase()}
       </button>
     </div>
   );
 }
 
-export default Drum
+export default memo(Drum)

@@ -12,15 +12,15 @@ import kick from 'resources/drum-samples/RP4_KICK_1.mp3';
 import Drum from './Drum';
 
 const drumSamples = [
-    { keyName: 'q', name: 'Closed Hat', audio: new Audio(closedHat) }, 
-    { keyName: 'w', name: 'Open Hat', audio: new Audio(openHat) }, 
-    { keyName: 'e', name: 'Heater One', audio: new Audio(heaterOne) }, 
-    { keyName: 'a', name: 'Heater Two', audio: new Audio(heaterTwo) }, 
-    { keyName: 's', name: 'Heater Three', audio: new Audio(heaterThree) }, 
-    { keyName: 'd', name: 'Heater Four', audio: new Audio(heaterFour) }, 
-    { keyName: 'z', name: 'Heater Five', audio: new Audio(heaterFive) }, 
-    { keyName: 'x', name: 'Kick n\' Hat', audio: new Audio(kickNHat) }, 
-    { keyName: 'c', name: 'Kick', audio: new Audio(kick) }
+    { keyName: 'q', name: 'Closed Hat', audio: closedHat }, 
+    { keyName: 'w', name: 'Open Hat', audio: openHat }, 
+    { keyName: 'e', name: 'Heater One', audio: heaterOne }, 
+    { keyName: 'a', name: 'Heater Two', audio: heaterTwo }, 
+    { keyName: 's', name: 'Heater Three', audio: heaterThree }, 
+    { keyName: 'd', name: 'Heater Four', audio: heaterFour }, 
+    { keyName: 'z', name: 'Heater Five', audio: heaterFive }, 
+    { keyName: 'x', name: 'Kick n\' Hat', audio: kickNHat }, 
+    { keyName: 'c', name: 'Kick', audio: kick }
 ];
 
 class DrumWrapper extends Component {
@@ -29,6 +29,16 @@ class DrumWrapper extends Component {
         this.state = {
             drums: drumSamples,
             display: '',
+            audioContext: null,
+        }
+    }
+
+    handleFetch = async (path) => {
+        try {
+            let rsvp = await fetch(path);
+            return this.state.audioContext.decodeAudioData(await rsvp.arrayBuffer())
+        } catch (err) {
+            console.log('ERR:', err.message)
         }
     }
     
@@ -39,11 +49,28 @@ class DrumWrapper extends Component {
         })
     }
 
+    componentDidMount() {
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        const audioContext = new AudioContext();
+        this.setState({audioContext: audioContext});
+        this.setState(prevState => {
+            let data = [...prevState.drums];
+            data.map(obj => {
+                this.handleFetch(obj.audio).then(buf => {
+                    obj.audio = buf;
+                    obj.context = this.state.audioContext;
+                });
+            })
+            return { data };
+        })
+        console.log(this.state.drums)
+    }
+
     render() {
         return (
             <div id="drum-machine">
                 <div className='button-container'>
-                    {this.state.drums.map(obj => <Drum obj={obj} callback={this.handleCallback} />)}
+                    {this.state.drums.map((obj, i) => <Drum key={i} obj={obj} callback={this.handleCallback} />)}
                 </div>
                 <div id='display'>
                     {this.state.display}
