@@ -5,6 +5,23 @@
     height: 100vh;
 }
 
+#Closed-Hat {
+    border-top-left-radius: 20px;
+}
+
+#Kick {
+    border-bottom-right-radius: 20px;
+}
+
+#display {
+    background-color: black;
+    color: greenyellow;
+    font-family: 'Courier New', Courier, monospace;
+    text-align: center;
+    margin-top: 15px;
+    border: 2px solid gray;
+}
+
 .button-container {
     width: 150px;
     display: flex;
@@ -14,11 +31,21 @@
 .drum-pad {
     width: 50px;
     height: 50px;
+    color:aliceblue;
+    background-color: slategray;
+    border: 0.5px solid rgb(42, 42, 42);
 }
 
-.drum-pad button {
-    width: 100%;
-    height: 100%;
+.drum-pad:hover {
+    background-color: rgb(131, 150, 171);
+}
+
+.drum-pad:active {
+    background-color: black;
+}
+
+.drum-pad:focus-visible {
+    outline: none;
 }
 
 .drum-pad button:active {

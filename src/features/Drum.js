@@ -4,14 +4,14 @@ function Drum(props) {
 
   let data = props.obj
 
-  React.useEffect(() => {
+  React.useEffect(() => { // Create keypress listener
     window.addEventListener('keydown', (event) => {
-      if (event.key === data.keyName) handleAudio(event);
+      if (event.key === data.keyName || event.key === data.keyName.toLowerCase()) handleAudio(event);
     })
 
-    return (
+    return ( // Cleanup
       window.removeEventListener('keydown', (event) => {
-        if (event.key === data.keyName) handleAudio(event);
+        if (event.key === data.keyName || event.key === data.keyName.toLowerCase()) handleAudio(event);
       })
     );})
   
@@ -19,15 +19,11 @@ function Drum(props) {
   const handleAudio = (event) => {
     if (event.type === 'click'){
       let aud = event.target.firstElementChild;
-      if(aud) aud.play();
+      aud.play();
     } else {
       let aud = document.getElementById(event.key.toUpperCase());
       aud.play();
     }
-    /*let src = data.context.createBufferSource();
-    src.buffer = data.audioBuffer;
-    src.connect(data.context.destination);
-    src.start();*/
     props.callback(data.name);
   }
 

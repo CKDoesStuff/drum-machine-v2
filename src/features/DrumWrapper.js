@@ -32,38 +32,12 @@ class DrumWrapper extends Component {
             audioContext: null,
         }
     }
-
-    handleFetch = async (path) => {
-        try {
-            let rsvp = await fetch(path);
-            return this.state.audioContext.decodeAudioData(await rsvp.arrayBuffer())
-        } catch (err) {
-            console.log('ERR:', err.message)
-        }
-    }
     
     // Callback to pull sample name from child to pass to display div
     handleCallback = (childData) => {
         this.setState({
             display: childData,
         })
-    }
-
-    componentDidMount() {
-        const AudioContext = window.AudioContext || window.webkitAudioContext;
-        const audioContext = new AudioContext();
-        this.setState({audioContext: audioContext});
-        this.setState(prevState => {
-            let data = [...prevState.drums];
-            data.map(obj => {
-                this.handleFetch(obj.audio).then(buf => {
-                    obj.audioBuffer = buf;
-                    obj.context = this.state.audioContext;
-                });
-            })
-            return { data };
-        })
-        console.log(this.state.drums)
     }
 
     render() {
