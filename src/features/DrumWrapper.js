@@ -57,7 +57,7 @@ class DrumWrapper extends Component {
             let data = [...prevState.drums];
             data.map(obj => {
                 this.handleFetch(obj.audio).then(buf => {
-                    obj.audio = buf;
+                    obj.audioBuffer = buf;
                     obj.context = this.state.audioContext;
                 });
             })
