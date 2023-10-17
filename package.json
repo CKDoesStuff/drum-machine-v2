@@ -1,7 +1,7 @@
 {
   "name": "drum-machine-v2",
   "version": "0.1.0",
-  "homepage": "https://ckdoesstuff.github.io/drum-machine",
+  "homepage": "https://ckdoesstuff.github.io/drum-machine-v2",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.17.0",
