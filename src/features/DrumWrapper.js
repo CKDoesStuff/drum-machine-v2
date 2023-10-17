@@ -12,15 +12,15 @@ import kick from 'resources/drum-samples/RP4_KICK_1.mp3';
 import Drum from './Drum';
 
 const drumSamples = [
-    { keyName: 'q', name: 'Closed Hat', audio: closedHat }, 
-    { keyName: 'w', name: 'Open Hat', audio: openHat }, 
-    { keyName: 'e', name: 'Heater One', audio: heaterOne }, 
-    { keyName: 'a', name: 'Heater Two', audio: heaterTwo }, 
-    { keyName: 's', name: 'Heater Three', audio: heaterThree }, 
-    { keyName: 'd', name: 'Heater Four', audio: heaterFour }, 
-    { keyName: 'z', name: 'Heater Five', audio: heaterFive }, 
-    { keyName: 'x', name: 'Kick n\' Hat', audio: kickNHat }, 
-    { keyName: 'c', name: 'Kick', audio: kick }
+    { keyName: 'Q', name: 'Closed Hat', audio: closedHat }, 
+    { keyName: 'W', name: 'Open Hat', audio: openHat }, 
+    { keyName: 'E', name: 'Heater One', audio: heaterOne }, 
+    { keyName: 'A', name: 'Heater Two', audio: heaterTwo }, 
+    { keyName: 'S', name: 'Heater Three', audio: heaterThree }, 
+    { keyName: 'D', name: 'Heater Four', audio: heaterFour }, 
+    { keyName: 'Z', name: 'Heater Five', audio: heaterFive }, 
+    { keyName: 'X', name: 'Kick n\' Hat', audio: kickNHat }, 
+    { keyName: 'C', name: 'Kick', audio: kick }
 ];
 
 class DrumWrapper extends Component {

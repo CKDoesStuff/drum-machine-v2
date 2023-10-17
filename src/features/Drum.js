@@ -4,22 +4,26 @@ function Drum(props) {
 
   let data = props.obj
 
-  /*React.useEffect(() => {
+  React.useEffect(() => {
     window.addEventListener('keydown', (event) => {
-      if (event.key === data.keyName) ;
+      if (event.key === data.keyName) handleAudio(event);
     })
 
     return (
       window.removeEventListener('keydown', (event) => {
-        if (event.key === data.keyName) ;
+        if (event.key === data.keyName) handleAudio(event);
       })
-    )
-  }
-  )*/
+    );})
+  
 
   const handleAudio = (event) => {
-    let aud = event.target.firstElementChild;
-    aud.play();
+    if (event.type === 'click'){
+      let aud = event.target.firstElementChild;
+      if(aud) aud.play();
+    } else {
+      let aud = document.getElementById(event.key.toUpperCase());
+      aud.play();
+    }
     /*let src = data.context.createBufferSource();
     src.buffer = data.audioBuffer;
     src.connect(data.context.destination);
@@ -28,12 +32,10 @@ function Drum(props) {
   }
 
   return (
-    <div id={data.name.split(' ').join('-')} onClick={(e) => {handleAudio(e)}} className='drum-pad'>
-      <button className='drum-pad'>
+    <button id={data.name.split(' ').join('-')} onClick={(e) => {handleAudio(e)}} className='drum-pad'>
       <audio className='clip' id={data.keyName.toUpperCase()} src={data.audio} type="audio/wav"></audio>
         {data.keyName.toUpperCase()}
-      </button>
-    </div>
+    </button>
   );
 }
 
